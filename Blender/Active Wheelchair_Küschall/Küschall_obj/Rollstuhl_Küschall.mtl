@@ -1,0 +1,82 @@
+# Max2Mtl Version 4.0 Mar 10th, 2001
+#
+# Multi/Sub Material__1017 (9) to come 
+#
+newmtl Lack
+Ka  0.2 0.1 0.5
+Kd  0.2 0.1 0.5
+Ks  0.7 0.6 0.7
+d  1.0
+Ns  5.0
+illum 2
+#
+newmtl Mattschwarz
+Ka  0.2 0.2 0.2
+Kd  0.2 0.2 0.2
+Ks  0.9 0.9 0.9
+d  1.0
+Ns  3.9
+illum 2
+#
+newmtl Plastik_schwarz
+Ka  0.0 0.0 0.0
+Kd  0.1 0.1 0.1
+Ks  0.9 0.9 0.9
+d  1.0
+Ns  5.3
+illum 2
+#
+newmtl Stoff
+Ka  0.6 0.6 0.6
+Kd  0.6 0.6 0.6
+Ks  0.9 0.9 0.9
+d  1.0
+Ns  0.0
+illum 2
+map_Kd camo_cloth_black_2048.png
+bump camo_cloth_black_2048.png
+#
+newmtl Metal_Chrome_bumpy
+Ka  0.0 0.0 0.0
+Kd  0.4 0.4 0.4
+Ks  0.9 0.9 0.9
+d  1.0
+Ns  15.0
+illum 2
+#
+newmtl Metal_Chrome_glatt
+Ka  0.0 0.0 0.0
+Kd  0.4 0.4 0.4
+Ks  0.9 0.9 0.9
+d  1.0
+Ns  15.0
+illum 2
+#
+newmtl Metal_Chrome_Noise
+Ka  0.6 0.6 0.6
+Kd  0.6 0.6 0.6
+Ks  0.9 0.9 0.9
+d  1.0
+Ns  0.0
+illum 2
+#
+newmtl Reifen
+Ka  0.6 0.6 0.6
+Kd  0.6 0.6 0.6
+Ks  0.9 0.9 0.9
+d  1.0
+Ns  0.0
+illum 2
+map_Kd -o 0.0 -0.0 0.0 -s 5.1 18.1 1.0 textur.bmp
+#
+newmtl Metal_Chrome_glatt
+Ka  0.0 0.0 0.0
+Kd  0.4 0.4 0.4
+Ks  0.9 0.9 0.9
+d  1.0
+Ns  15.0
+illum 2
+#
+# Multi/Sub Material__1017 done 
+#
+# EOF

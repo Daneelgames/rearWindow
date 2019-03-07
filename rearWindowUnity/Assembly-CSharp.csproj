@@ -61,6 +61,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\PlayerController.cs" />
+    <Compile Include="Assets\Scripts\WheelsController.cs" />
     <Reference Include="Unity.RenderPipelines.Core.Editor">
       <HintPath>C:/@daneelgames/rearWindow/rearWindowUnity/Library/ScriptAssemblies/Unity.RenderPipelines.Core.Editor.dll</HintPath>
     </Reference>

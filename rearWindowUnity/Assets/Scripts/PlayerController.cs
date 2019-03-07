@@ -14,7 +14,7 @@ public class PlayerController : MonoBehaviour
     private float m_OriginalPitch;              // The pitch sof the audio source at the start of the scene.
 
     public Animator playerAnim;
-    public Animator wheelChairAnim;
+    public WheelsController wheelsController;
 
     private void Awake()
     {
@@ -47,44 +47,40 @@ public class PlayerController : MonoBehaviour
         {
             playerAnim.SetBool("MoveForward", true);
             playerAnim.SetBool("MoveBackwards", false);
-            wheelChairAnim.SetBool("Forward", true);
-            wheelChairAnim.SetBool("Backwards", false);
+            wheelsController.Forward();
         }
         else if (m_MovementInputValue < 0)
         {
             playerAnim.SetBool("MoveBackwards", true);
             playerAnim.SetBool("MoveForward", false);
-            wheelChairAnim.SetBool("Forward", false);
-            wheelChairAnim.SetBool("Backwards", true);
+            wheelsController.Backwards();
         }
         else if (m_MovementInputValue == 0)
         {
             playerAnim.SetBool("MoveForward", false);
             playerAnim.SetBool("MoveBackwards", false);
-            wheelChairAnim.SetBool("Forward", false);
-            wheelChairAnim.SetBool("Backwards", false);
         }
 
         if (m_TurnInputValue > 0)
         {
             playerAnim.SetBool("TurnRight", true);
             playerAnim.SetBool("TurnLeft", false);
-            wheelChairAnim.SetBool("Left", false);
-            wheelChairAnim.SetBool("Right", true);
+
+            if (m_MovementInputValue == 0)
+                wheelsController.Right();
         }
         else if (m_TurnInputValue < 0)
         {
             playerAnim.SetBool("TurnLeft", true);
             playerAnim.SetBool("TurnRight", false);
-            wheelChairAnim.SetBool("Left", true);
-            wheelChairAnim.SetBool("Right", false);
+
+            if (m_MovementInputValue == 0)
+                wheelsController.Left();
         }
         else
         {
             playerAnim.SetBool("TurnLeft", false);
             playerAnim.SetBool("TurnRight", false);
-            wheelChairAnim.SetBool("Left", false);
-            wheelChairAnim.SetBool("Right", false);
         }
     }
 

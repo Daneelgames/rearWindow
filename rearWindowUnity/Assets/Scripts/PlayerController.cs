@@ -16,9 +16,14 @@ public class PlayerController : MonoBehaviour
     public Animator playerAnim;
     public WheelsController wheelsController;
 
+    GameManager gm;
+
     private void Awake()
     {
         m_Rigidbody = GetComponent<Rigidbody>();
+
+        gm = GameManager.instance;
+        gm.pc = this;
     }
 
     private void OnEnable()

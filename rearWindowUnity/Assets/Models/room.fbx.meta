@@ -13,6 +13,17 @@ ModelImporter:
     100014: wall.002
     100016: wall.003
     100018: window
+    100020: characterColorPaletteTexture
+    100022: curtains
+    100024: chair
+    100026: table
+    100028: lefthand
+    100030: lefthand_end
+    100032: rightHand
+    100034: rightHand_end
+    100036: typewriter
+    100038: typewriterHands
+    100040: typewriterPaper
     400000: door
     400002: doorway
     400004: floor
@@ -23,7 +34,19 @@ ModelImporter:
     400014: wall.002
     400016: wall.003
     400018: window
+    400020: characterColorPaletteTexture
+    400022: curtains
+    400024: chair
+    400026: table
+    400028: lefthand
+    400030: lefthand_end
+    400032: rightHand
+    400034: rightHand_end
+    400036: typewriter
+    400038: typewriterHands
+    400040: typewriterPaper
     2100000: No Name
+    2100002: initialShadingGroup
     2300000: door
     2300002: doorway
     2300004: floor
@@ -33,6 +56,12 @@ ModelImporter:
     2300012: wall.002
     2300014: wall.003
     2300016: window
+    2300018: characterColorPaletteTexture
+    2300020: curtains
+    2300022: chair
+    2300024: table
+    2300026: typewriter
+    2300028: typewriterPaper
     3300000: door
     3300002: doorway
     3300004: floor
@@ -42,6 +71,12 @@ ModelImporter:
     3300012: wall.002
     3300014: wall.003
     3300016: window
+    3300018: characterColorPaletteTexture
+    3300020: curtains
+    3300022: chair
+    3300024: table
+    3300026: typewriter
+    3300028: typewriterPaper
     4300000: doorway
     4300002: door
     4300004: floor.001
@@ -51,6 +86,12 @@ ModelImporter:
     4300012: floor
     4300014: wall
     4300016: window
+    4300018: curtains
+    4300020: characterColorPaletteTexture
+    4300022: chair
+    4300024: table
+    4300026: typewriter
+    4300028: typewriterPaper
   externalObjects: {}
   materials:
     importMaterials: 1

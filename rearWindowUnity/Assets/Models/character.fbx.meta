@@ -53,6 +53,7 @@ ModelImporter:
     100094: Wheelchair
     100096: wheelL
     100098: wheelR
+    100100: character uwTexture
     400000: armIK.l
     400002: armIK.r
     400004: //RootNode
@@ -103,6 +104,7 @@ ModelImporter:
     400094: Wheelchair
     400096: wheelL
     400098: wheelR
+    400100: character uwTexture
     2100000: Mat_riau__35
     2100002: Mat_riau__38
     2100004: Mat_riau__39
@@ -113,17 +115,20 @@ ModelImporter:
     2300004: Wheelchair
     2300006: wheelL
     2300008: wheelR
+    2300010: character uwTexture
     3300000: wheelBigL
     3300002: wheelBigR
     3300004: Wheelchair
     3300006: wheelL
     3300008: wheelR
+    3300010: character uwTexture
     4300000: wheelL
     4300002: wheelR
     4300004: wheelBigL
     4300006: wheelBigR
     4300008: Wheelchair
     4300010: characterColorPaletteTexture
+    4300012: character uwTexture
     7400000: playerIdle
     7400002: playerMoveBackwards
     7400004: playerMoveForward

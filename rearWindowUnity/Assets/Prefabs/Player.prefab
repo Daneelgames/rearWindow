@@ -105,7 +105,7 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 0
-  m_IsKinematic: 1
+  m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
@@ -121,6 +121,81 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f11d2c2380b7244c8709691962048f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &967950517347941570
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8156261736626172863}
+  - component: {fileID: 1534808929128478746}
+  - component: {fileID: 8464766944329312473}
+  - component: {fileID: 5780058059456258644}
+  m_Layer: 0
+  m_Name: PlayerInteractionZone
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8156261736626172863
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 967950517347941570}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4852648694302526239}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1534808929128478746
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 967950517347941570}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a37f7d6f0f324b47a2a17fd71d85025, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!136 &8464766944329312473
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 967950517347941570}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 1, z: 1}
+--- !u!54 &5780058059456258644
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 967950517347941570}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!114 &2441114742200746790
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -171,6 +246,7 @@ Transform:
   - {fileID: 4852648692641475262}
   - {fileID: 4852648693213578935}
   - {fileID: 9082947200645732708}
+  - {fileID: 8156261736626172863}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -185,9 +261,9 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.75
-  m_Height: 1.79
+  m_Height: 1.8326999
   m_Direction: 2
-  m_Center: {x: 0, y: 0.75, z: 0.15}
+  m_Center: {x: 0, y: 0.75, z: 0.17134994}
 --- !u!54 &2017967729
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -221,6 +297,7 @@ MonoBehaviour:
   m_TurnSpeed: 60
   playerAnim: {fileID: 4852648692634502490}
   wheelsController: {fileID: 2441114742200746790}
+  canMove: 1
 --- !u!1001 &4852648692641869882
 PrefabInstance:
   m_ObjectHideFlags: 0

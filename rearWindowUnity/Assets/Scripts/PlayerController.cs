@@ -18,6 +18,11 @@ public class PlayerController : MonoBehaviour
 
     GameManager gm;
 
+    [HideInInspector]
+    public PlayerInteractionZoneController interactionZone;
+    [HideInInspector]
+    public bool canMove = true;
+
     private void Awake()
     {
         m_Rigidbody = GetComponent<Rigidbody>();
@@ -38,54 +43,81 @@ public class PlayerController : MonoBehaviour
         m_TurnInputValue = Input.GetAxis("Horizontal");
 
         Animate();
+        Interact();
     }
 
     private void FixedUpdate()
     {
-        Move();
-        Turn();
+        if (canMove)
+        {
+            Move();
+            Turn();
+        }
+    }
+
+    void Interact()
+    {
+        if (Input.GetButtonDown("Fire1"))
+        {
+            if (canMove && interactionZone.closestObject != null)
+            {
+                canMove = false;
+                interactionZone.closestObject.Interact();
+            }
+        }
     }
 
     void Animate()
     {
-        if (m_MovementInputValue  > 0)
-        {
-            playerAnim.SetBool("MoveForward", true);
-            playerAnim.SetBool("MoveBackwards", false);
-            wheelsController.Forward();
-        }
-        else if (m_MovementInputValue < 0)
-        {
-            playerAnim.SetBool("MoveBackwards", true);
-            playerAnim.SetBool("MoveForward", false);
-            wheelsController.Backwards();
-        }
-        else if (m_MovementInputValue == 0)
-        {
-            playerAnim.SetBool("MoveForward", false);
-            playerAnim.SetBool("MoveBackwards", false);
-        }
 
-        if (m_TurnInputValue > 0)
+        if (canMove)
         {
-            playerAnim.SetBool("TurnRight", true);
-            playerAnim.SetBool("TurnLeft", false);
+            if (m_MovementInputValue > 0)
+            {
+                playerAnim.SetBool("MoveForward", true);
+                playerAnim.SetBool("MoveBackwards", false);
+                wheelsController.Forward();
+            }
+            else if (m_MovementInputValue < 0)
+            {
+                playerAnim.SetBool("MoveBackwards", true);
+                playerAnim.SetBool("MoveForward", false);
+                wheelsController.Backwards();
+            }
+            else if (m_MovementInputValue == 0)
+            {
+                playerAnim.SetBool("MoveForward", false);
+                playerAnim.SetBool("MoveBackwards", false);
+            }
 
-            if (m_MovementInputValue == 0)
-                wheelsController.Right();
-        }
-        else if (m_TurnInputValue < 0)
-        {
-            playerAnim.SetBool("TurnLeft", true);
-            playerAnim.SetBool("TurnRight", false);
+            if (m_TurnInputValue > 0)
+            {
+                playerAnim.SetBool("TurnRight", true);
+                playerAnim.SetBool("TurnLeft", false);
 
-            if (m_MovementInputValue == 0)
-                wheelsController.Left();
+                if (m_MovementInputValue == 0)
+                    wheelsController.Right();
+            }
+            else if (m_TurnInputValue < 0)
+            {
+                playerAnim.SetBool("TurnLeft", true);
+                playerAnim.SetBool("TurnRight", false);
+
+                if (m_MovementInputValue == 0)
+                    wheelsController.Left();
+            }
+            else
+            {
+                playerAnim.SetBool("TurnLeft", false);
+                playerAnim.SetBool("TurnRight", false);
+            }
         }
         else
         {
             playerAnim.SetBool("TurnLeft", false);
             playerAnim.SetBool("TurnRight", false);
+            playerAnim.SetBool("MoveForward", false);
+            playerAnim.SetBool("MoveBackwards", false);
         }
     }
 

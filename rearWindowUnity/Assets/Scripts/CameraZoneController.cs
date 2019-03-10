@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class CameraZoneController : MonoBehaviour
 {
+    [HideInInspector]
     public Camera cam;
     GameManager gm;
 
@@ -17,10 +18,13 @@ public class CameraZoneController : MonoBehaviour
     public void SetActive()
     {
         cam.enabled = true;
+        gm.activeCameraZone = this;
         foreach (CameraZoneController camZone in gm.cameraZoneControllers)
         {
             if (camZone != this)
+            {
                 camZone.cam.enabled = false;
+            }
         }
     }
 }

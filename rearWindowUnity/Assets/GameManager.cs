@@ -10,6 +10,8 @@ public class GameManager : MonoBehaviour
     public PlayerController pc;
     [HideInInspector]
     public List<CameraZoneController> cameraZoneControllers;
+    public List<InteractiveObjectController> interactiveObjectControllers;
+    public CameraZoneController activeCameraZone;
 
     private void Awake()
     {
@@ -22,6 +24,4 @@ public class GameManager : MonoBehaviour
 
         DontDestroyOnLoad(gameObject);
     }
-
-
 }

@@ -62,11 +62,11 @@
   <ItemGroup>
     <Compile Include="Assets\GameManager.cs" />
     <Compile Include="Assets\Scripts\CameraZoneController.cs" />
+    <Compile Include="Assets\Scripts\InteractiveObjectController.cs" />
     <Compile Include="Assets\Scripts\PlayerController.cs" />
+    <Compile Include="Assets\Scripts\PlayerInteractionZoneController.cs" />
     <Compile Include="Assets\Scripts\PlayerZoneColliderController.cs" />
     <Compile Include="Assets\Scripts\WheelsController.cs" />
-    <None Include="Assets\Ghettoish House\Read me.txt" />
-    <None Include="Assets\MegaPack1Lite\EnchantedForestPack1\README.txt" />
     <Reference Include="Unity.RenderPipelines.Core.Editor">
       <HintPath>C:/@daneelgames/rearWindow/rearWindowUnity/Library/ScriptAssemblies/Unity.RenderPipelines.Core.Editor.dll</HintPath>
     </Reference>

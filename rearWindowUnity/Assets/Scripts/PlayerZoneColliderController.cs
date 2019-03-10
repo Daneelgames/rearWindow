@@ -23,17 +23,17 @@ public class PlayerZoneColliderController : MonoBehaviour
         transform.position = pc.transform.position;
     }
 
-    private void OnTriggerStay(Collider other)
+    private void OnTriggerStay(Collider col)
     {
-        if (other.gameObject.layer == 9)
+        if (col.gameObject.layer == 9 &&  pc.canMove)
         {
             float distance = 100;
             CameraZoneController activeCamera = null;
             foreach(CameraZoneController camZone in gm.cameraZoneControllers)
             {
-                if (camZone.gameObject.name == other.gameObject.name)
+                if (camZone.gameObject.name == col.gameObject.name)
                 {
-                    float newDistance = Vector3.Distance(transform.position, camZone.gameObject.transform.position);
+                    float newDistance = Vector3.Distance(transform.position, camZone.transform.position);
                     if (newDistance < distance)
                     {
                         distance = newDistance;

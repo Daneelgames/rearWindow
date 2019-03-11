@@ -10,6 +10,9 @@ public class GameManager : MonoBehaviour
     public PlayerController pc;
     [HideInInspector]
     public List<CameraZoneController> cameraZoneControllers;
+    [HideInInspector]
+    public TextController tc;
+
     public List<InteractiveObjectController> interactiveObjectControllers;
     public CameraZoneController activeCameraZone;
 

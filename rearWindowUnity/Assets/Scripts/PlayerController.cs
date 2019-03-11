@@ -11,7 +11,6 @@ public class PlayerController : MonoBehaviour
     private Rigidbody m_Rigidbody;              // Reference used to move the tank.
     private float m_MovementInputValue;         // The current value of the movement input.
     private float m_TurnInputValue;             // The current value of the turn input.
-    private float m_OriginalPitch;              // The pitch sof the audio source at the start of the scene.
 
     public Animator playerAnim;
     public WheelsController wheelsController;
@@ -59,10 +58,17 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetButtonDown("Fire1"))
         {
-            if (canMove && interactionZone.closestObject != null)
+            if (interactionZone.closestObject != null)
             {
-                canMove = false;
-                interactionZone.closestObject.Interact();
+                if (canMove)
+                {
+                    canMove = false;
+                    interactionZone.closestObject.Interact();
+                }
+                else
+                {
+                    interactionZone.closestObject.Interact();
+                }
             }
         }
     }

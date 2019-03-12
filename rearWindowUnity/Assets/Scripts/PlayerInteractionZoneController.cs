@@ -6,7 +6,7 @@ public class PlayerInteractionZoneController : MonoBehaviour
 {
     public InteractiveObjectController closestObject;
 
-    List<InteractiveObjectController> objectsInRange = new List<InteractiveObjectController>();
+    public List<InteractiveObjectController> objectsInRange = new List<InteractiveObjectController>();
     GameManager gm;
     PlayerController pc;
 
@@ -109,6 +109,8 @@ public class PlayerInteractionZoneController : MonoBehaviour
                 {
                     objectsInRange.Remove(objInGm);
                     objInGm.ToggleFeedback(false);
+                    if (objectsInRange.Count == 0)
+                        closestObject = null;
                     return;
                 }
             }

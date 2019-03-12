@@ -142,6 +142,7 @@ GameObject:
   - component: {fileID: 5231198534577703386}
   - component: {fileID: 7430740761257917094}
   - component: {fileID: 5424035296524487030}
+  - component: {fileID: 4079144298374139486}
   m_Layer: 10
   m_Name: DoorOut
   m_TagString: Untagged
@@ -192,3 +193,22 @@ MonoBehaviour:
   feedback: {fileID: 2748367368482160600}
   cam: {fileID: 0}
   anim: {fileID: 0}
+  dialogues:
+  - phrases:
+    - I have to read the mail first.
+  interactingDelayMax: 0.25
+  teleport: {fileID: 4079144298374139486}
+--- !u!114 &4079144298374139486
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5068882643985576453}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3cfcfc264af3a44291874fb425943b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneName: OldroseKitchen
+  spawner: MainEntrance

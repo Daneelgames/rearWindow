@@ -5,15 +5,7 @@ using TMPro;
 
 public class TextController : MonoBehaviour
 {
-    GameManager gm;
-
     public List<TextMeshProUGUI> textObjects;
-
-    private void Start()
-    {
-        gm = GameManager.instance;
-        gm.tc = this;
-    }
 
     public void SetText(string newText)
     {

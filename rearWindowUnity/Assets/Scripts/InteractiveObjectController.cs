@@ -17,14 +17,17 @@ public class InteractiveObjectController : MonoBehaviour
 
     public List<Lists> dialogues = new List<Lists>();
     string textToDisplay;
-    string currentLine;
+    int currentDialogue = 0;
+    int currentLine = 0;
 
     AudioSource _audio;
     TextController tc;
     GameManager gm;
 
     bool interacting;
+    public float interactingDelayMax = 0.25f;
     float interactingDelay = 0f;
+    public TeleportController teleport;
 
     private void Start()
     {
@@ -49,65 +52,111 @@ public class InteractiveObjectController : MonoBehaviour
 
     public void Interact()
     {
-        if (interactingDelay <= 0)
-            StartCoroutine(InteractingDelay());
         if (!interacting)
         {
-            interacting = true;
-            ToggleFeedback(false);
-
-            if (_audio)
-                _audio.Play();
-            if (cam)
-            {
-                gm.activeCameraZone.enabled = false;
-                cam.enabled = true;
-                camAudioListener.enabled = true;
-            }
-            if (anim)
-                anim.SetBool("Action", true);
-
             if (dialogues.Count > 0)
-            {
-                StartCoroutine(AnimateText(dialogues[0].phrases[0]));
-            }
+                StartDialogue();
+            else if (teleport)
+                teleport.Teleport();
         }
         else
         {
             if (interactingDelay <= 0)
             {
-                if (textToDisplay == currentLine)
+                if (textToDisplay == dialogues[currentDialogue].phrases[currentLine])
                 {
                     // skip line
+                    if (currentLine < dialogues[currentDialogue].phrases.Count - 1)
+                    {
+                        currentLine += 1;
+                        StartCoroutine(AnimateText(dialogues[currentDialogue].phrases[currentLine]));
+                    }
+                    else
+                    {
+                        print("here");
+                        FinishDialogue();
+                    }
                 }
                 else
                 {
-                    // 
+                    FinishLine();
                 }
             }
         }
+
+        if (interactingDelay <= 0)
+            StartCoroutine(InteractingDelay());
+    }
+
+    void StartDialogue()
+    {
+        interacting = true;
+        ToggleFeedback(false);
+
+        if (_audio)
+            _audio.Play();
+        if (cam)
+        {
+            gm.activeCameraZone.SetInactive();
+            cam.enabled = true;
+            camAudioListener.enabled = true;
+        }
+        if (anim)
+            anim.SetBool("Action", true);
+
+        if (dialogues.Count > 0)
+        {
+            StartCoroutine(AnimateText(dialogues[currentDialogue].phrases[currentLine]));
+        }
+    }
+
+    void FinishLine()
+    {
+        textToDisplay = dialogues[currentDialogue].phrases[currentLine];
+        tc.SetText(textToDisplay);
+    }
+
+    void FinishDialogue()
+    {
+        tc.SetText(null);
+        interacting = false;
+        ToggleFeedback(true);
+
+        if (_audio)
+            _audio.Stop();
+        if (cam)
+        {
+            gm.activeCameraZone.SetActive();
+            cam.enabled = false;
+            camAudioListener.enabled = false;
+        }
+        if (anim)
+            anim.SetBool("Action", false);
+
+        currentLine = 0;
+        StartCoroutine(gm.pc.CanMove());
     }
 
     IEnumerator InteractingDelay()
     {
-        interactingDelay = 0.5f;
+        interactingDelay = interactingDelayMax;
         while (interactingDelay > 0)
         {
-            print(interactingDelay);
-
             interactingDelay -= Time.deltaTime;
             yield return null;
         }
     }
 
-
     IEnumerator AnimateText(string strComplete)
     {
         int i = 0;
         textToDisplay = "";
-        currentLine = strComplete;
         while (i < strComplete.Length)
         {
+            if (textToDisplay == strComplete)
+            {
+                yield break;
+            }
             textToDisplay += strComplete[i++];
             tc.SetText(textToDisplay);
             yield return new WaitForSeconds(0.05f);

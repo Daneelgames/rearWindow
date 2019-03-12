@@ -17,6 +17,8 @@ public class CameraZoneController : MonoBehaviour
         gm.cameraZoneControllers.Add(this);
 
         SetActive();
+
+        transform.SetParent(null);
     }
 
     public void SetActive()
@@ -28,9 +30,18 @@ public class CameraZoneController : MonoBehaviour
         {
             if (camZone != this)
             {
-                camZone.cam.enabled = false;
-                camAudioListener.enabled = false;
+                camZone.SetInactive();
             }
         }
+        foreach(GameObject o in gm.objectsTurnToCamera)
+        {
+            o.transform.LookAt(cam.transform);
+        }
+    }
+
+    public void SetInactive()
+    {
+        cam.enabled = false;
+        camAudioListener.enabled = false;
     }
 }

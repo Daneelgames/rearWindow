@@ -60,6 +60,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\AlwaysFaceCamera.cs" />
     <Compile Include="Assets\GameManager.cs" />
     <Compile Include="Assets\Scripts\CameraZoneController.cs" />
     <Compile Include="Assets\Scripts\InteractiveObjectController.cs" />
@@ -67,6 +68,7 @@
     <Compile Include="Assets\Scripts\PlayerInteractionZoneController.cs" />
     <Compile Include="Assets\Scripts\PlayerZoneColliderController.cs" />
     <Compile Include="Assets\Scripts\WheelsController.cs" />
+    <Compile Include="Assets\TeleportController.cs" />
     <Compile Include="Assets\TextController.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01_UGUI.cs" />

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    public static PlayerController instance;
+
     public int m_PlayerNumber = 1;              // Used to identify which tank belongs to which player.  This is set by this tank's manager.
     public float m_Speed = 12f;                 // How fast the tank moves forward and back.
     public float m_TurnSpeed = 180f;            // How fast the tank turns in degrees per second.
@@ -14,20 +16,33 @@ public class PlayerController : MonoBehaviour
 
     public Animator playerAnim;
     public WheelsController wheelsController;
+    AudioSource wheelChairAudio;
 
     GameManager gm;
 
     [HideInInspector]
     public PlayerInteractionZoneController interactionZone;
     [HideInInspector]
+    public PlayerZoneColliderController zoneCollider;
     public bool canMove = true;
+    bool canInteract = true;
 
     private void Awake()
     {
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+            Destroy(gameObject);
+
         m_Rigidbody = GetComponent<Rigidbody>();
 
         gm = GameManager.instance;
-        gm.pc = this;
+        if (gm.pc == null)
+            gm.pc = this;
+        wheelChairAudio = wheelsController.gameObject.GetComponent<AudioSource>();
     }
 
     private void OnEnable()
@@ -41,8 +56,19 @@ public class PlayerController : MonoBehaviour
         m_MovementInputValue = Input.GetAxis("Vertical");
         m_TurnInputValue = Input.GetAxis("Horizontal");
 
+        if (canMove && (m_MovementInputValue != 0 || m_TurnInputValue != 0))
+        {
+            wheelChairAudio.volume = Mathf.Lerp(wheelChairAudio.volume, 1, Time.deltaTime);
+        }
+        else if (!canMove || (m_MovementInputValue == 0 && m_TurnInputValue == 0))
+        {
+            wheelChairAudio.volume = Mathf.Lerp(wheelChairAudio.volume, 0, 10 * Time.deltaTime);
+        }
+
         Animate();
-        Interact();
+
+        if (canInteract)
+            Interact();
     }
 
     private void FixedUpdate()
@@ -138,5 +164,25 @@ public class PlayerController : MonoBehaviour
         float turn = m_TurnInputValue * m_TurnSpeed * Time.deltaTime;
         Quaternion turnRotation = Quaternion.Euler(0f, turn, 0f);
         m_Rigidbody.MoveRotation(m_Rigidbody.rotation * turnRotation);
+    }
+
+    public IEnumerator CanMove()
+    {
+        canInteract = false;
+        canMove = true;
+        yield return new WaitForSeconds(0.5f);
+        canInteract = true;
+    }
+
+    public void ParentZones(Transform parent, bool active)
+    {
+        zoneCollider.transform.SetParent(parent);
+        zoneCollider.activeCamera = null;
+        zoneCollider.gameObject.SetActive(active);
+
+        interactionZone.transform.SetParent(parent);
+        interactionZone.closestObject = null;
+        interactionZone.objectsInRange.Clear();
+        interactionZone.gameObject.SetActive(active);
     }
 }

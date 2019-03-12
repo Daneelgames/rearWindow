@@ -7,6 +7,7 @@ public class PlayerZoneColliderController : MonoBehaviour
     Rigidbody rb;
     PlayerController pc;
     GameManager gm;
+    public CameraZoneController activeCamera;
 
     private void Start()
     {
@@ -14,6 +15,7 @@ public class PlayerZoneColliderController : MonoBehaviour
 
         gm = GameManager.instance;
         pc = gm.pc;
+        pc.zoneCollider = this;
 
         transform.SetParent(null);
     }
@@ -23,15 +25,14 @@ public class PlayerZoneColliderController : MonoBehaviour
         transform.position = pc.transform.position;
     }
 
-    private void OnTriggerStay(Collider col)
+    private void OnTriggerEnter(Collider col)
     {
         if (col.gameObject.layer == 9 &&  pc.canMove)
         {
-            float distance = 100;
-            CameraZoneController activeCamera = null;
+            float distance = 1000;
             foreach(CameraZoneController camZone in gm.cameraZoneControllers)
             {
-                if (camZone.gameObject.name == col.gameObject.name)
+                if (camZone.gameObject == col.gameObject)
                 {
                     float newDistance = Vector3.Distance(transform.position, camZone.transform.position);
                     if (newDistance < distance)

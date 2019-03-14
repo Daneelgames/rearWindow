@@ -18,6 +18,9 @@ public class GameManager : MonoBehaviour
     public List<GameObject> objectsTurnToCamera = new List<GameObject>();
     public Image transitionImage;
 
+    public AudioSource musicSource;
+    public AudioSource sfxSource;
+
     private void Awake()
     {
         if (instance == null)

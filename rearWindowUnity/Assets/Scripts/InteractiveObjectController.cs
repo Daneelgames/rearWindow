@@ -29,6 +29,8 @@ public class InteractiveObjectController : MonoBehaviour
     float interactingDelay = 0f;
     public TeleportController teleport;
 
+    ActionOnDialogue actionOnDialogue;
+
     private void Start()
     {
         gm = GameManager.instance;
@@ -36,6 +38,8 @@ public class InteractiveObjectController : MonoBehaviour
         gm.interactiveObjectControllers.Add(this);
         ToggleFeedback(false);
         _audio = GetComponent<AudioSource>();
+
+        actionOnDialogue = GetComponent<ActionOnDialogue>();
 
         if (cam)
         {
@@ -118,6 +122,12 @@ public class InteractiveObjectController : MonoBehaviour
 
     void FinishDialogue()
     {
+        if (currentDialogue +1 < dialogues.Count)
+        {
+            actionOnDialogue.DialogIsOver(currentDialogue);
+            currentDialogue += 1;
+        }
+
         tc.SetText(null);
         interacting = false;
         ToggleFeedback(true);

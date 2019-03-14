@@ -162,6 +162,8 @@ public class PlayerController : MonoBehaviour
     private void Turn()
     {
         float turn = m_TurnInputValue * m_TurnSpeed * Time.deltaTime;
+        if (m_MovementInputValue < 0)
+            turn *= -1;
         Quaternion turnRotation = Quaternion.Euler(0f, turn, 0f);
         m_Rigidbody.MoveRotation(m_Rigidbody.rotation * turnRotation);
     }

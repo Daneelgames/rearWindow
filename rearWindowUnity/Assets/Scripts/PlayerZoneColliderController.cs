@@ -27,7 +27,7 @@ public class PlayerZoneColliderController : MonoBehaviour
 
     private void OnTriggerEnter(Collider col)
     {
-        if (col.gameObject.layer == 9 &&  pc.canMove)
+        if (col.gameObject.layer == 9 && gm && pc && pc.canMove )
         {
             float distance = 1000;
             foreach(CameraZoneController camZone in gm.cameraZoneControllers)

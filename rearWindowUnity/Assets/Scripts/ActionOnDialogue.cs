@@ -10,19 +10,25 @@ public class ActionOnDialogue : MonoBehaviour
         public GameObject objectToEnable;
         public GameObject objectToDisable;
         public int dialogue;
+        public int phrase;
     }
 
     public List<Action> actions = new List<Action>();
 
-    public void DialogIsOver(int index)
+    public void LineIsOver(int dialogueIndex, int phraseIndex)
     {
         foreach(Action a in actions)
         {
-            if (a.dialogue == index)
+            if (a.dialogue == dialogueIndex)
             {
-                a.objectToDisable.SetActive(false);
-                a.objectToEnable.SetActive(true);
-                return;
+                if (a.phrase == phraseIndex)
+                {
+                    if(a.objectToDisable)
+                        a.objectToDisable.SetActive(false);
+                    if (a.objectToEnable)
+                        a.objectToEnable.SetActive(true);
+                    return;
+                }
             }
         }
     }

@@ -3,16 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
+public class Phrase
+{
+    public string actorName;
+    public string text;
+    public Color textColor = Color.white;
+    public Camera camera;
+}
+[System.Serializable]
 public class Lists
 {
-    public List<string> phrases = new List<string>();
+    public List<Phrase> phrases = new List<Phrase>();
 }
+
 
 public class InteractiveObjectController : MonoBehaviour
 {
     public GameObject feedback;
-    public Camera cam;
-    AudioListener camAudioListener;
     public Animator anim;
 
     public List<Lists> dialogues = new List<Lists>();
@@ -29,6 +36,8 @@ public class InteractiveObjectController : MonoBehaviour
     float interactingDelay = 0f;
     public TeleportController teleport;
 
+    Camera currentCamera;
+
     ActionOnDialogue actionOnDialogue;
 
     private void Start()
@@ -41,11 +50,19 @@ public class InteractiveObjectController : MonoBehaviour
 
         actionOnDialogue = GetComponent<ActionOnDialogue>();
 
-        if (cam)
+        if (dialogues.Count > 0)
         {
-            cam.enabled = false;
-            camAudioListener = cam.gameObject.GetComponent<AudioListener>();
-            camAudioListener.enabled = false;
+            foreach(Lists l in dialogues)
+            {
+                foreach(Phrase phrases in l.phrases)
+                {
+                    if (phrases.camera != null)
+                    {
+                        phrases.camera.enabled = false;
+                        phrases.camera.gameObject.GetComponent<AudioListener>().enabled = false;
+                    }
+                }
+            }
         }
     }
 
@@ -67,17 +84,29 @@ public class InteractiveObjectController : MonoBehaviour
         {
             if (interactingDelay <= 0)
             {
-                if (textToDisplay == dialogues[currentDialogue].phrases[currentLine])
+                Phrase newPhrase = dialogues[currentDialogue].phrases[currentLine];
+                if (textToDisplay == newPhrase.actorName + ":\n" + newPhrase.text)
                 {
                     // skip line
+                    if (actionOnDialogue)
+                        actionOnDialogue.LineIsOver(currentDialogue, currentLine);
+
                     if (currentLine < dialogues[currentDialogue].phrases.Count - 1)
                     {
                         currentLine += 1;
-                        StartCoroutine(AnimateText(dialogues[currentDialogue].phrases[currentLine]));
+                        if (dialogues[currentDialogue].phrases[currentLine].camera)
+                        {
+                            currentCamera.enabled = false;
+                            currentCamera.GetComponent<AudioListener>().enabled = false;
+                            currentCamera = dialogues[currentDialogue].phrases[currentLine].camera;
+                            //gm.activeCameraZone.SetInactive();
+                            currentCamera.enabled = true;
+                            currentCamera.GetComponent<AudioListener>().enabled = true;
+                        }
+                        StartCoroutine(AnimateText(dialogues[currentDialogue].phrases[currentLine].text));
                     }
                     else
                     {
-                        print("here");
                         FinishDialogue();
                     }
                 }
@@ -99,46 +128,49 @@ public class InteractiveObjectController : MonoBehaviour
 
         if (_audio)
             _audio.Play();
-        if (cam)
-        {
-            gm.activeCameraZone.SetInactive();
-            cam.enabled = true;
-            camAudioListener.enabled = true;
-        }
         if (anim)
             anim.SetBool("Action", true);
 
         if (dialogues.Count > 0)
         {
-            StartCoroutine(AnimateText(dialogues[currentDialogue].phrases[currentLine]));
+            StartCoroutine(AnimateText(dialogues[currentDialogue].phrases[currentLine].text));
+            if (dialogues[currentDialogue].phrases[0].camera)
+            {
+                gm.activeCameraZone.SetInactive();
+                currentCamera = dialogues[currentDialogue].phrases[0].camera;
+                currentCamera.enabled = true;
+                currentCamera.GetComponent<AudioListener>().enabled = true;
+            }
         }
     }
 
     void FinishLine()
     {
-        textToDisplay = dialogues[currentDialogue].phrases[currentLine];
-        tc.SetText(textToDisplay);
+        Phrase newPhrase = dialogues[currentDialogue].phrases[currentLine];
+        textToDisplay = newPhrase.text;
+        textToDisplay = newPhrase.actorName + ":\n" + textToDisplay;
+        tc.SetText(textToDisplay, newPhrase.textColor);
     }
 
     void FinishDialogue()
     {
         if (currentDialogue +1 < dialogues.Count)
         {
-            actionOnDialogue.DialogIsOver(currentDialogue);
             currentDialogue += 1;
         }
 
-        tc.SetText(null);
+        tc.SetText(null, Color.black);
         interacting = false;
         ToggleFeedback(true);
 
         if (_audio)
             _audio.Stop();
-        if (cam)
+        if (currentCamera != null)
         {
             gm.activeCameraZone.SetActive();
-            cam.enabled = false;
-            camAudioListener.enabled = false;
+            currentCamera.enabled = false;
+            currentCamera.GetComponent<AudioListener>().enabled = false;
+            currentCamera = null;
         }
         if (anim)
             anim.SetBool("Action", false);
@@ -161,6 +193,8 @@ public class InteractiveObjectController : MonoBehaviour
     {
         int i = 0;
         textToDisplay = "";
+        Phrase newPhrase = dialogues[currentDialogue].phrases[currentLine];
+        strComplete = newPhrase.actorName + ":\n" + strComplete;
         while (i < strComplete.Length)
         {
             if (textToDisplay == strComplete)
@@ -168,7 +202,7 @@ public class InteractiveObjectController : MonoBehaviour
                 yield break;
             }
             textToDisplay += strComplete[i++];
-            tc.SetText(textToDisplay);
+            tc.SetText(textToDisplay, newPhrase.textColor);
             yield return new WaitForSeconds(0.05f);
         }
     }

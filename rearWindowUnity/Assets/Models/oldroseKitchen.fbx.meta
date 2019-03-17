@@ -15,6 +15,14 @@ ModelImporter:
     100018: Wall.002
     100020: Wall.003
     100022: Wall.004
+    100024: Fridge
+    100026: fridgeDoorDown
+    100028: fridgeDoorUp
+    100030: kitchenbox
+    100032: kitchenbox.001
+    100034: kitchenbox.002
+    100036: kitchenTable
+    100038: window
     400000: ceiling
     400002: Cube
     400004: floor
@@ -27,6 +35,14 @@ ModelImporter:
     400018: Wall.002
     400020: Wall.003
     400022: Wall.004
+    400024: Fridge
+    400026: fridgeDoorDown
+    400028: fridgeDoorUp
+    400030: kitchenbox
+    400032: kitchenbox.001
+    400034: kitchenbox.002
+    400036: kitchenTable
+    400038: window
     2100000: No Name
     2300000: ceiling
     2300002: Cube
@@ -39,6 +55,14 @@ ModelImporter:
     2300016: Wall.002
     2300018: Wall.003
     2300020: Wall.004
+    2300022: Fridge
+    2300024: fridgeDoorDown
+    2300026: fridgeDoorUp
+    2300028: kitchenbox
+    2300030: kitchenbox.001
+    2300032: kitchenbox.002
+    2300034: kitchenTable
+    2300036: window
     3300000: ceiling
     3300002: Cube
     3300004: floor
@@ -50,6 +74,14 @@ ModelImporter:
     3300016: Wall.002
     3300018: Wall.003
     3300020: Wall.004
+    3300022: Fridge
+    3300024: fridgeDoorDown
+    3300026: fridgeDoorUp
+    3300028: kitchenbox
+    3300030: kitchenbox.001
+    3300032: kitchenbox.002
+    3300034: kitchenTable
+    3300036: window
     4300000: tvScreen
     4300002: tv
     4300004: tvStand
@@ -61,6 +93,14 @@ ModelImporter:
     4300016: ceiling
     4300018: Wall
     4300020: floor
+    4300022: fridgeDoorDown
+    4300024: fridgeDoorUp
+    4300026: Fridge
+    4300028: kitchenTable
+    4300030: kitchenbox.002
+    4300032: kitchenbox.001
+    4300034: kitchenbox
+    4300036: window
   externalObjects: {}
   materials:
     importMaterials: 1

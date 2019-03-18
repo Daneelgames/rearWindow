@@ -58,8 +58,9 @@ public class InteractiveObjectController : MonoBehaviour
                 {
                     if (phrases.camera != null)
                     {
-                        phrases.camera.enabled = false;
-                        phrases.camera.gameObject.GetComponent<AudioListener>().enabled = false;
+                        phrases.camera.gameObject.SetActive(false);
+                        //phrases.camera.enabled = false;
+                        //phrases.camera.gameObject.GetComponent<AudioListener>().enabled = false;
                     }
                 }
             }
@@ -96,12 +97,13 @@ public class InteractiveObjectController : MonoBehaviour
                         currentLine += 1;
                         if (dialogues[currentDialogue].phrases[currentLine].camera)
                         {
-                            currentCamera.enabled = false;
-                            currentCamera.GetComponent<AudioListener>().enabled = false;
+                            currentCamera.gameObject.SetActive(false);
+                            //currentCamera.enabled = false;
+                            //currentCamera.GetComponent<AudioListener>().enabled = false;
                             currentCamera = dialogues[currentDialogue].phrases[currentLine].camera;
-                            //gm.activeCameraZone.SetInactive();
-                            currentCamera.enabled = true;
-                            currentCamera.GetComponent<AudioListener>().enabled = true;
+                            currentCamera.gameObject.SetActive(true);
+                            //currentCamera.enabled = true;
+                            //currentCamera.GetComponent<AudioListener>().enabled = true;
                         }
                         StartCoroutine(AnimateText(dialogues[currentDialogue].phrases[currentLine].text));
                     }
@@ -123,6 +125,7 @@ public class InteractiveObjectController : MonoBehaviour
 
     void StartDialogue()
     {
+
         interacting = true;
         ToggleFeedback(false);
 
@@ -133,14 +136,16 @@ public class InteractiveObjectController : MonoBehaviour
 
         if (dialogues.Count > 0)
         {
-            StartCoroutine(AnimateText(dialogues[currentDialogue].phrases[currentLine].text));
             if (dialogues[currentDialogue].phrases[0].camera)
             {
                 gm.activeCameraZone.SetInactive();
                 currentCamera = dialogues[currentDialogue].phrases[0].camera;
-                currentCamera.enabled = true;
-                currentCamera.GetComponent<AudioListener>().enabled = true;
+                currentCamera.gameObject.SetActive(true);
+                //currentCamera.enabled = true;
+                //currentCamera.GetComponent<AudioListener>().enabled = true;
             }
+            tc.textBackground.SetBool("Active", true);
+            StartCoroutine(AnimateText(dialogues[currentDialogue].phrases[currentLine].text));
         }
     }
 
@@ -168,14 +173,16 @@ public class InteractiveObjectController : MonoBehaviour
         if (currentCamera != null)
         {
             gm.activeCameraZone.SetActive();
-            currentCamera.enabled = false;
-            currentCamera.GetComponent<AudioListener>().enabled = false;
+            currentCamera.gameObject.SetActive(false);
+            //.enabled = false;
+            //currentCamera.GetComponent<AudioListener>().enabled = false;
             currentCamera = null;
         }
         if (anim)
             anim.SetBool("Action", false);
 
         currentLine = 0;
+        tc.textBackground.SetBool("Active", false);
         StartCoroutine(gm.pc.CanMove());
     }
 

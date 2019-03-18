@@ -6,6 +6,8 @@ using TMPro;
 public class TextController : MonoBehaviour
 {
     public List<TextMeshProUGUI> textObjects;
+    public Animator textBackground;
+    public Animator letterboxAnim;
 
     public void SetText(string newText, Color color)
     {

@@ -25,7 +25,13 @@ public class PlayerController : MonoBehaviour
     [HideInInspector]
     public PlayerZoneColliderController zoneCollider;
     public bool canMove = true;
+    public GameObject fpsCam;
+    bool aiming = false;
+    float aimDelay = 0;
+    float aimMaxDelay = 0.5f;
     bool canInteract = true;
+
+    public WeaponController weapon;
 
     private void Awake()
     {
@@ -69,11 +75,14 @@ public class PlayerController : MonoBehaviour
 
         if (canInteract)
             Interact();
+
+        if (aimDelay > 0)
+            aimDelay -= Time.deltaTime;
     }
 
     private void FixedUpdate()
     {
-        if (canMove)
+        if (canMove && !aiming)
         {
             Move();
             Turn();
@@ -84,7 +93,7 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetButtonDown("Fire1"))
         {
-            if (interactionZone.closestObject != null)
+            if (!aiming && interactionZone.closestObject != null)
             {
                 if (canMove)
                 {
@@ -97,6 +106,57 @@ public class PlayerController : MonoBehaviour
                 }
             }
         }
+        if (Input.GetButton("Fire2"))
+        {
+            if (canMove && aimDelay <= 0)
+            {
+                playerAnim.SetBool("Aiming", true);
+                gm.tc.letterboxAnim.SetBool("Active", true);
+                canMove = false;
+                aiming = true;
+                gm.activeCameraZone.cam.gameObject.SetActive(false);
+                fpsCam.SetActive(true);
+                aimDelay = aimMaxDelay;
+                StartCoroutine(LiftGun(true));
+            }
+        }
+        if (Input.GetButtonUp("Fire2"))
+        {
+            if (aiming)
+            {
+                Invoke("CancelAim" ,0.5f);
+            }
+        }
+    }
+
+    IEnumerator LiftGun(bool up)
+    {
+        float t = 0f;
+        Vector3 startPos = weapon.transform.localPosition;
+        Vector3 newPos;
+        if (up)
+            newPos = new Vector3(0, 1.25f, 0.5f);
+        else
+            newPos = new Vector3(0, 0.7f, 0);
+
+        while (t < 0.25f)
+        {
+            t += Time.deltaTime;
+            weapon.transform.localPosition = Vector3.Lerp(startPos, newPos, t / 0.25f);
+            yield return null;
+        }
+    }
+
+    void CancelAim()
+    {
+        playerAnim.SetBool("Aiming", false);
+        gm.tc.letterboxAnim.SetBool("Active", false);
+        canMove = true;
+        aiming = false;
+        gm.activeCameraZone.cam.gameObject.SetActive(true);
+        fpsCam.SetActive(false);
+        aimDelay = aimMaxDelay;
+        StartCoroutine(LiftGun(false));
     }
 
     void Animate()

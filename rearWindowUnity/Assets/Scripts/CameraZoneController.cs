@@ -12,19 +12,16 @@ public class CameraZoneController : MonoBehaviour
     private void Start()
     {
         cam = transform.parent.gameObject.GetComponent<Camera>();
-        camAudioListener = transform.parent.gameObject.GetComponent<AudioListener>();
+        transform.SetParent(null);
+        camAudioListener = cam.gameObject.GetComponent<AudioListener>();
         gm = GameManager.instance;
         gm.cameraZoneControllers.Add(this);
-
         SetActive();
-
-        transform.SetParent(null);
     }
 
     public void SetActive()
     {
-        cam.enabled = true;
-        camAudioListener.enabled = true;
+        cam.gameObject.SetActive(true);
         gm.activeCameraZone = this;
         foreach (CameraZoneController camZone in gm.cameraZoneControllers)
         {
@@ -33,7 +30,7 @@ public class CameraZoneController : MonoBehaviour
                 camZone.SetInactive();
             }
         }
-        foreach(GameObject o in gm.objectsTurnToCamera)
+        foreach (GameObject o in gm.objectsTurnToCamera)
         {
             o.transform.LookAt(cam.transform);
         }
@@ -41,7 +38,6 @@ public class CameraZoneController : MonoBehaviour
 
     public void SetInactive()
     {
-        cam.enabled = false;
-        camAudioListener.enabled = false;
+        cam.gameObject.SetActive(false);
     }
 }

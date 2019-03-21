@@ -25,13 +25,16 @@ public class PlayerController : MonoBehaviour
     [HideInInspector]
     public PlayerZoneColliderController zoneCollider;
     public bool canMove = true;
-    public GameObject fpsCam;
+    public Camera fpsCam;
     bool aiming = false;
+    bool canMoveGun = false;
     float aimDelay = 0;
-    float aimMaxDelay = 0.5f;
+    float aimMaxDelay = 0.2f;
     bool canInteract = true;
 
     public WeaponController weapon;
+    Vector3 weaponInitialPos = new Vector3(0, 1.25f, 0.5f);
+    Vector3 mouseInitAimPosition;
 
     private void Awake()
     {
@@ -110,21 +113,25 @@ public class PlayerController : MonoBehaviour
         {
             if (canMove && aimDelay <= 0)
             {
+                aiming = true;
                 playerAnim.SetBool("Aiming", true);
                 gm.tc.letterboxAnim.SetBool("Active", true);
                 canMove = false;
-                aiming = true;
                 gm.activeCameraZone.cam.gameObject.SetActive(false);
-                fpsCam.SetActive(true);
+                fpsCam.gameObject.SetActive(true);
                 aimDelay = aimMaxDelay;
                 StartCoroutine(LiftGun(true));
+            }
+            if (canMoveGun)
+            {
+                ControlGun();
             }
         }
         if (Input.GetButtonUp("Fire2"))
         {
             if (aiming)
             {
-                Invoke("CancelAim" ,0.5f);
+                Invoke("CancelAim" ,0.2f);
             }
         }
     }
@@ -135,7 +142,7 @@ public class PlayerController : MonoBehaviour
         Vector3 startPos = weapon.transform.localPosition;
         Vector3 newPos;
         if (up)
-            newPos = new Vector3(0, 1.25f, 0.5f);
+            newPos = weaponInitialPos;
         else
             newPos = new Vector3(0, 0.7f, 0);
 
@@ -145,6 +152,8 @@ public class PlayerController : MonoBehaviour
             weapon.transform.localPosition = Vector3.Lerp(startPos, newPos, t / 0.25f);
             yield return null;
         }
+        canMoveGun = up;
+        mouseInitAimPosition = Input.mousePosition;
     }
 
     void CancelAim()
@@ -154,9 +163,17 @@ public class PlayerController : MonoBehaviour
         canMove = true;
         aiming = false;
         gm.activeCameraZone.cam.gameObject.SetActive(true);
-        fpsCam.SetActive(false);
+        fpsCam.gameObject.SetActive(false);
         aimDelay = aimMaxDelay;
         StartCoroutine(LiftGun(false));
+    }
+
+    void ControlGun()
+    {
+        Vector3 newMouseOffset = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 1);
+        Vector3 objPosition = fpsCam.ScreenToWorldPoint(newMouseOffset);
+
+        weapon.transform.localPosition = objPosition;
     }
 
     void Animate()
